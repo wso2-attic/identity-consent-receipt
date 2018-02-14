@@ -1,0 +1,1367 @@
+swagger: '2.0'
+######################################################
+# Prologue
+######################################################
+info:
+  version: 'v1.0.0'
+  title: "WSO2 Identity Server - User Consent Management"
+  description: |
+    This document specifies a **RESTful API** for **WSO2 Identity Server - User Consent Manager**
+  contact:
+    name: "WSO2"
+    url: "https://wso2.com/identity-and-access-management"
+    email: "architecture@wso2.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+######################################################
+# The fixed parts of the URLs of the API
+######################################################
+
+tags:
+  - name: "Consent Receipt"
+    description: "Creating and reading consent receipts"
+  - name: "Data Retrieval"
+    description: "Getting details about consents, users and data controllers"
+  - name: "Data Insertion"
+    description: "Adding consent details to the database"
+  - name: "Data Updates"
+    description: "Update the details of the database"
+  - name: "Data Revoking"
+    description: "Revoke the details from the database"
+
+# The schemes supported by the API
+schemes:
+  - http
+  - https
+
+# The domain of the API.
+# This is configured by the customer during deployment.
+# The given host is just an example.
+host: apis.wso2.com
+
+# The base path of the API.
+# Will be prefixed to all paths.
+basePath: /api/is/consentManager/v1.0.0
+
+# The following media types can be passed as input in message bodies of the API.
+# The actual media type must be specified in the Content-Type header field of the request.
+# The default is json, i.e. the Content-Type header is not needed to
+# be set, but supporting it serves extensibility.
+consumes:
+  - application/json
+
+# The following media types may be passed as output in message bodies of the API.
+# The media type(s) consumable by the requester is specified in the Accept header field
+# of the corresponding request.
+# The actual media type returned will be specified in the Content-Type header field
+# of the of the response.
+# The default of the Accept header is json, i.e. there is not needed to
+# set the value, but supporting it serves extensibility.
+produces:
+  - application/json
+
+paths:
+  /consent/{user-name}/thirdParty:
+    get:
+      summary: "Getting consent details by third party name"
+      description: "Getting consent details regarding to the third party which operated on the user data"
+      tags:
+        - "Data Retrieval"
+      parameters:
+        - $ref: '#/parameters/user-name'
+        - $ref: '#/parameters/thirdPartyId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/ConsentByThirdParty'
+        400:
+          description: "invalid subject name supplied"
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: "consent not found"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/{user-name}/serviceList:
+    get:
+      summary: "Getting service details"
+      description: "Getting details of consented services by an user"
+      tags:
+        - "Data Retrieval"
+      parameters:
+        - $ref: '#/parameters/user-name'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/ServiceList'
+        400:
+          description: "invalid subject name supplied"
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: "services not found for this subject name"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/{user-name}/services/{serviceId}:
+    get:
+      summary: "Getting services by service id"
+      description: "Getting service details regarding to the subject name and the service id"
+      tags:
+        - "Data Retrieval"
+      parameters:
+        - $ref: '#/parameters/user-name'
+        - $ref: '#/parameters/serviceId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/ServiceCR'
+        400:
+          description: "invalid subject name supplied"
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: "services not found for this subject name"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/{user-name}/services/{serviceId}/purpose:
+    get:
+      summary: "Getting details of purposes"
+      description: "Getting details of purposes of a service by subject name"
+      tags:
+        - "Data Retrieval"
+      parameters:
+        - $ref: '#/parameters/user-name'
+        - $ref: '#/parameters/serviceId'
+        - $ref: '#/parameters/purposeId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Purpose'
+        400:
+          description: "invalid subject name supplied"
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: "purpose not found for this purpose"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/dataController:
+    post:
+      summary: "Adding data controller"
+      description: "Adding details of the data controller to the consent database"
+      tags:
+        - "Data Insertion"
+      parameters:
+        - $ref: '#/parameters/dataController'
+      responses:
+        201:
+          description: "successfully created the data controller"
+          schema:
+            $ref: '#/definitions/DataControllerInput'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      summary: "Getting all data controllers details"
+      description: "Getting all data controllers details for configuration"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/DataControllerInput'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: "Updating the data controller details"
+      description: "Updating the data controller details of the consent database"
+      tags:
+        - "Data Updates"
+      parameters:
+        - $ref: '#/parameters/dataController'
+      responses:
+        200:
+          description: "successfully updated the data controller"
+          schema:
+            $ref: '#/definitions/DataControllerInput'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: "Delete data controller"
+      description: "Delete data controller details from the consent database"
+      parameters:
+        - $ref: '#/parameters/dataControllerId'
+      responses:
+        200:
+          description: "Successful Delete"
+          schema:
+            $ref: '#/definitions/DataControllerInput'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/data-controller/id:
+    get:
+      summary: "Getting data controller details"
+      description: "Getting data controller details by the id"
+      tags:
+        - "Data Retrieval"
+      parameters:
+        - $ref: '#/parameters/dataControllerId'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/DataControllerInput'
+        404:
+          description: "content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/purpose-category:
+    post:
+      summary: "Add purpose category"
+      description: "Add a purpose category to the consent database"
+      parameters:
+        - $ref: '#/parameters/purposeCategory'
+      responses:
+        201:
+          description: "Successfully created the purpose category"
+          schema:
+            $ref: '#/definitions/PurposeCategory'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      summary: "Get purpose category"
+      description: "Get purpose category details from the consent database"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/PurposeCategoryList'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: "Update purpose category"
+      description: "Update purpose category details to the consent database"
+      parameters:
+        - $ref: '#/parameters/purposeCategory'
+      responses:
+        200:
+          description: "Successfully updated the purpose category"
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: "Delete purpose category"
+      description: "Delete purpose category from the consent database"
+      parameters:
+        - $ref: '#/parameters/purposeCategoryId'
+      responses:
+        200:
+          description: "Successful Delete"
+          schema:
+            $ref: '#/definitions/PurposeCategory'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/purpose-category/id:
+    get:
+      summary: "Get purpose category details"
+      description: "Get purpose category details from purpose category id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/PurposeCategory'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/personalInfoCategory:
+    post:
+      summary: "Adding a PII category"
+      description: "Adding a personally identifiable info category to the consent database"
+      tags:
+        - "Data Insertion"
+      parameters:
+        - $ref: '#/parameters/piiCategory'
+      responses:
+        200:
+          description: "successfully added personally identifiable information category to the consent database"
+          schema:
+            $ref: '#/definitions/PiiCategory'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      summary: "Getting PII categories"
+      description: "Getting personally identifiable info categories from the database"
+      tags:
+        - "Data Retrieval"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/PiiCatList'
+        404:
+          description: "content not found"
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: "Updating PII categories"
+      description: "Updating personally identifiable info categories in the consent database"
+      tags:
+        - "Data Updates"
+      parameters:
+        - $ref: '#/parameters/piiCategory'
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: "Delete personally identifiable info category"
+      description: "Delete personally identifiable info category by category id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful Delete"
+          schema:
+            $ref: '#/definitions/PiiCategory'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/personal-info-cat/id:
+    get:
+      summary: "Getting a personal info cat"
+      description: "Getting details of a personal info cat by id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: '#/definitions/PiiCategory'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/service:
+    post:
+      summary: "Adding a service"
+      description: "Adding details of a service to the consent database"
+      tags:
+        - "Data Insertion"
+      parameters:
+        - $ref: '#/parameters/service'
+      responses:
+        200:
+         description: "successfully created the service"
+         schema:
+           $ref: '#/definitions/ServiceWebForm'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      summary: "Getting services"
+      description: "Getting details of services from the database"
+      tags:
+        - "Data Retrieval"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/ServiceWebForm'
+        404:
+           description: "content not found"
+           schema:
+             $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: "Updating a service"
+      description: "Updating details of a service in the consent database"
+      tags:
+        - "Data Updates"
+      parameters:
+        - $ref: '#/parameters/service'
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: "Delete service"
+      description: "Delete service by service id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful Delete"
+          schema:
+            $ref: '#/definitions/ServiceWebForm'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/service/id:
+    get:
+      summary: "Get a service by id"
+      description: "Get details of a service from id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            $ref: '#/definitions/ServiceWebForm'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/purpose:
+    post:
+      summary: "Adding purpose details"
+      description: "Adding details of a purpose to the consent database"
+      tags:
+        - "Data Insertion"
+      parameters:
+        - $ref: '#/parameters/purpose'
+      responses:
+        200:
+          description: "successfully created the purpose"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      summary: "Getting purpose details"
+      description: "Getting purpose details from the consent database"
+      tags:
+        - "Data Retrieval"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/PurposeList'
+        404:
+          description: "purposes not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: "Update purpose details"
+      description: "Update details of a purpose in the consent database"
+      tags:
+        - "Data Updates"
+      parameters:
+        - $ref: '#/parameters/purpose'
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "purpose not found"
+          schema:
+            $ref: '#/definitions/Error'
+        405:
+          description: "method not allowed"
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: "Delete purpose"
+      description: "Delete purpose by purpose id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful Delete"
+          schema:
+            $ref: '#/definitions/Purpose'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/purpose/id:
+    get:
+      summary: "Get details of a purpose"
+      description: "Get details of a purpose by purpose id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/Purpose'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/third-party:
+    post:
+      summary: "Add third party"
+      description: "Add third party details to the consent database"
+      parameters:
+        - $ref: '#/parameters/thirdParty'
+      responses:
+        201:
+          description: "Successfully created the third party."
+          schema:
+            $ref: '#/definitions/ThirdParty'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      summary: "Get third parties"
+      description: "Get third party details from the consent database"
+      responses:
+        201:
+          description: "Successful operation."
+          schema:
+            type: "array"
+            items:
+              $ref: '#/definitions/ThirdPartyList'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    put:
+      summary: "Update third party"
+      description: "Update third party details to the database"
+      parameters:
+        - $ref: '#/parameters/thirdParty'
+      responses:
+        200:
+          description: "Successfully updated the third party to the consent database"
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+    delete:
+      summary: "Delete third party"
+      description: "Delete third party by third party id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful Delete"
+          schema:
+            $ref: '#/definitions/ThirdParty'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/configuration/third-party/id:
+    get:
+      summary: "Get details of a third party"
+      description: "Get details of a third party by id"
+      parameters:
+        - $ref: '#/parameters/id'
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: '#/definitions/ThirdParty'
+        404:
+          description: "Content not found"
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: "Internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/revoke:
+    put:
+      summary: "Revoke consent of an user"
+      description: "Revoke consent of an user by service and purpose"
+      tags:
+        - "Data Revoking"
+      parameters:
+        - $ref: '#/parameters/revokingConsent'
+      responses:
+        200:
+          description: "successful operation"
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/{user-name}/receipt:
+    get:
+      summary: "Creating consent receipt"
+      description: "Getting consent details of an user to create the consent receipt"
+      tags:
+        - "Consent Receipt"
+      parameters:
+        - $ref: '#/parameters/user-name'
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/ConsentReceipt'
+        400:
+          description: "invalid subject name supplied"
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: "consent for this subject name not found"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/receipt/webForm:
+    post:
+      summary: "Adding consent details"
+      description: "Adding user consent details from a web form which is provided by the user"
+      tags:
+        - "Data Insertion"
+      parameters:
+        - $ref: '#/parameters/userConsentWebForm'
+      responses:
+        201:
+          description: "successfully created the consent"
+        500:
+          description: "internal server error"
+          schema:
+            $ref: '#/definitions/Error'
+
+  /consent/receipt:
+    post:
+      summary: "Adding consent details"
+      description: "Adding user consent details from a JSON which is provided by the user"
+      tags:
+        - "Consent Receipt"
+      parameters:
+        - $ref: '#/parameters/userDetails'
+      responses:
+        201:
+          description: "successfully created the consents for the user"
+        400:
+          description: "invalid consent supplied"
+          schema:
+            $ref: '#/definitions/Error'
+        409:
+          description: "conflict when creating the consents (mostly the subject name)"
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Consent:
+    type: "object"
+    properties:
+      serviceId:
+        type: "integer"
+        format: "int32"
+      service:
+        type: "string"
+      purposes:
+        type: "array"
+        items:
+          $ref: '#/definitions/Purpose'
+
+  Purpose:
+    type: "object"
+    properties:
+      purposeId:
+        type: "integer"
+        format: "int32"
+      purpose:
+        type: "string"
+      purposeCategory:
+        type: "array"
+        items:
+          $ref: '#/definitions/PurposeCategory'
+      consentType:
+        type: "string"
+      piiCategory:
+        type: "array"
+        items:
+          $ref: '#/definitions/PiiCategory'
+      primaryPurpose:
+        type: "integer"
+        format: "int32"
+      termination:
+        type: "string"
+      thirdPartyDisclosure:
+        type: "integer"
+        format: "int32"
+      thirdPartyId:
+        type: "integer"
+        format: "int32"
+      thirdPartyName:
+        type: "string"
+    required: [
+      purposeId,
+      purpose,
+      purposeCategory,
+      consentType,
+      piiCategory,
+      primaryPurpose,
+      termination,
+      thirdPartyDisclosure,
+      thirdPartyName
+    ]
+
+  PurposeCategory:
+    type: "object"
+    properties:
+      pursopeId:
+        type: "integer"
+        format: "int32"
+      purposeCategoryId:
+        type: "integer"
+        format: "int32"
+      purposeCategoryShortCode:
+        type: "string"
+      description:
+        type: "string"
+    required: [
+      purposeCategoryShortCode
+    ]
+
+  PurposeWebForm:
+    type: "object"
+    properties:
+      purposeId:
+        type: "integer"
+        format: "int32"
+      purposeName:
+        type: "string"
+    required: [
+      purposeName
+    ]
+
+#  PurposeInput:
+#    type: "object"
+#    properties:
+#      purposeId:
+#        type: "integer"
+#        format: "int32"
+#      purpose:
+#        type: "string"
+#      primaryPurpose:
+#        type: "integer"
+#        format: "int32"
+#      termination:
+#        type: "integer"
+#        format: "int32"
+#      thirdPartyDisclosure:
+#        type: "integer"
+#        format: "int32"
+#      thirdPartyId:
+#        type: "integer"
+#        format: "int32"
+#      purposeCategories:
+#        type: "array"
+#        items:
+#          $ref: '#/definitions/PurposeCategory'
+#      piiCategories:
+#        type: "array"
+#        items:
+#          $ref: '#/definitions/PiiCategory'
+#    required: [
+#      purpose,
+#      primaryPurpose,
+#      termination,
+#      thirdPartyDisclosure,
+#      thirdPartyId
+#    ]
+
+  PurposeList:
+    type: "object"
+    properties:
+      purposes:
+        type: "array"
+        items:
+          $ref: '#/definitions/Purpose'
+    required: [
+      purposes
+    ]
+
+  AddressCR:
+    type: "object"
+    properties:
+      streetAddress:
+        type: "string"
+      addressCountry:
+        type: "string"
+    required: [
+      streetAddress,
+      addressCountry
+      ]
+
+  DataControllerCR:
+    type: "object"
+    properties:
+      org:
+        type: "string"
+      contact:
+        type: "string"
+      address:
+        $ref: '#/definitions/AddressCR'
+      email:
+        type: "string"
+      phone:
+        type: "string"
+    required: [
+      org,
+      contact,
+      address,
+      email,
+      phone
+      ]
+
+  DataControllerInput:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      org:
+        type: "string"
+      contact:
+        type: "string"
+      address:
+        $ref: '#/definitions/AddressCR'
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      publicKey:
+        type: "string"
+      policyUrl:
+        type: "string"
+    required: [
+      org,
+      contact,
+      address,
+      email,
+      phone,
+      publicKey,
+      policyUrl
+    ]
+
+  ServiceCR:
+    type: "object"
+    properties:
+      serviceId:
+        type: "integer"
+        format: "int32"
+      serviceName:
+        type: "string"
+      purposes:
+        type: "array"
+        items:
+          $ref: '#/definitions/Purpose'
+    required: [
+      serviceId,
+      serviceName
+      ]
+
+  ServiceWebForm:
+    type: "object"
+    properties:
+      serviceId:
+        type: "integer"
+        format: "int32"
+      serviceName:
+        type: "string"
+      purposes:
+        type: "array"
+        items:
+          $ref: '#/definitions/PurposeWebForm'
+    required: [
+      serviceName,
+      purposes
+    ]
+
+#  ServiceInput:
+#    type: "object"
+#    properties:
+#      serviceId:
+#        type: "integer"
+#        format: "int32"
+#      serviceName:
+#        type: "string"
+#    required: [
+#      serviceName
+#    ]
+
+  ServiceList:
+    type: "object"
+    properties:
+      serviceList:
+        type: "array"
+        items:
+          $ref: '#/definitions/ServiceCR'
+    required: [
+      serviceList
+    ]
+
+  ConsentReceipt:
+    type: "object"
+    properties:
+      version:
+        type: "string"
+      jurisdiction:
+        type: "string"
+      consentTimestamp:
+        type: "integer"
+        format: "int32"
+      collectionMethod:
+        type: "string"
+      consentReceiptID:
+        type: "string"
+      publicKey:
+        type: "string"
+      subject:
+        type: "string"
+      dataController:
+        $ref: '#/definitions/DataControllerCR'
+      policyUrl:
+        type: "string"
+      services:
+        type: "array"
+        items:
+          $ref: '#/definitions/ServiceCR'
+      sensitive:
+        type: "integer"
+        format: "int32"
+      spiCat:
+        type: "array"
+        items:
+          type: "string"
+    required: [
+          version,
+          jurisdiction,
+          consentTimestamp,
+          collectionMethod,
+          consentReceiptID,
+          publicKey,
+          subject,
+          dataController,
+          policyUrl,
+          services,
+          sensitive,
+          spiCat
+        ]
+
+  ConsentByThirdParty:
+    type: "object"
+    properties:
+      thirdPartyId:
+        type: "integer"
+        format: "int32"
+      thirdPartyName:
+        type: "string"
+      services:
+        type: "array"
+        items:
+          $ref: '#/definitions/Consent'
+    required: [
+      thirdPartyId,
+      thirdPartyName,
+      services
+    ]
+
+  UserConsentWebForm:
+    type: "object"
+    properties:
+      collectionMethod:
+        type: "string"
+      subjectName:
+        type: "string"
+      sguid:
+        type: "string"
+      dataControllerId:
+        type: "integer"
+        format: "int32"
+      services:
+        type: "array"
+        items:
+          $ref: '#/definitions/ServiceWebForm'
+    required: [
+      collectionMethod,
+      subjectName,
+      dataControllerId,
+      services
+    ]
+
+  PiiCategory:
+    type: "object"
+    properties:
+      piiCatId:
+        type: "integer"
+        format: "int32"
+      piiCat:
+        type: "string"
+      description:
+        type: "string"
+      sensitivity:
+        type: "integer"
+        format: "int32"
+    required: [
+      piiCat,
+      description,
+      sensitivity
+    ]
+
+  PiiCatList:
+    type: "object"
+    properties:
+      piiCategories:
+        type: "array"
+        items:
+          $ref: '#/definitions/PiiCategory'
+    required: [
+      piiCategories
+    ]
+
+  ConsentRevokeList:
+    type: "object"
+    properties:
+      subjectName:
+        type: "string"
+      services:
+        type: "array"
+        items:
+          $ref: '#/definitions/ServiceRevokeList'
+
+  ServiceRevokeList:
+    type: "object"
+    properties:
+      serviceId:
+        type: "integer"
+        format: "int32"
+      purposes:
+        type: "array"
+        items:
+          $ref: '#/definitions/PurposeRevokeList'
+    required: [
+      serviceId,
+      purposes
+    ]
+
+  PurposeRevokeList:
+    type: "object"
+    properties:
+      purposeId:
+        type: "integer"
+        format: "int32"
+    required: [
+      purposeId
+    ]
+
+  DataControllerId:
+    type: "integer"
+    properties:
+      dataControllerId:
+        type: "integer"
+        format: "int32"
+
+  PurposeCategoryList:
+    type: "object"
+    properties:
+      purposeCategoryList:
+        type: "array"
+        items:
+          $ref: '#/definitions/PurposeCategory'
+
+  ThirdParty:
+    type: "object"
+    properties:
+      thirdPartyId:
+        type: "integer"
+        format: "int32"
+      thirdPartyName:
+        type: "string"
+
+  ThirdPartyList:
+    type: "object"
+    properties:
+      thirdPartyList:
+        type: "array"
+        items:
+          $ref: "#/definitions/ThirdParty"
+    required: [
+      thirdPartyList
+    ]
+
+  Error:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+      errorDescription:
+        type: "string"
+    
+parameters:
+  user-name:
+    name: "user-name"
+    in: "path"
+    description: "user name to filter users"
+    required: true
+    type: "string"
+
+  userDetails:
+    name: "userDetails"
+    in: "body"
+    description: "Details of the user which is giving the consents"
+    required: true
+    schema:
+      $ref: '#/definitions/ConsentReceipt'
+
+  thirdPartyId:
+    name: "thirdPartyId"
+    in: "query"
+    description: "Third party name which is using to filter the user consents"
+    required: true
+    type: "integer"
+    format: "int32"
+
+  serviceId:
+    name: "serviceId"
+    in: "path"
+    description: "service id which is using to filter user requested services"
+    required: true
+    type: "integer"
+    format: "int32"
+
+  purposeId:
+    name: "purposeId"
+    in: "query"
+    description: "purpose id which is using to filter user requested purposes"
+    required: true
+    type: "integer"
+    format: "int32"
+
+  userConsentWebForm:
+    name: "userConsentWebForm"
+    in: "body"
+    description: "Details of the user consent which is given through a web form"
+    required: true
+    schema:
+      $ref: '#/definitions/UserConsentWebForm'
+
+  dataController:
+    name: "dataController"
+    in: "body"
+    description: "Details of the data controller"
+    required: true
+    schema:
+      $ref: '#/definitions/DataControllerInput'
+
+  piiCategory:
+    name: "piiCategory"
+    in: "body"
+    description: "Details of a personally identifiable info category"
+    required: true
+    schema:
+      $ref: '#/definitions/PiiCategory'
+
+  id:
+    name: "categoryId"
+    in: "query"
+    description: "Category id"
+    required: true
+    type: "integer"
+    format: "int32"
+
+  purpose:
+    name: "purpose"
+    in: "body"
+    description: "Details of a purpose"
+    required: true
+    schema:
+      $ref: '#/definitions/Purpose'
+
+  serviceName:
+    name: "serviceName"
+    in: "path"
+    description: "Service name of a service"
+    required: true
+    type: "string"
+
+  service:
+    name: "service"
+    in: "body"
+    description: "Details of a service"
+    required: true
+    schema:
+      $ref: '#/definitions/ServiceWebForm'
+
+  revokingConsent:
+    name: "revokingConsent"
+    in: "body"
+    description: "Details for the consent revoke"
+    required: true
+    schema:
+      $ref: '#/definitions/ConsentRevokeList'
+
+  dataControllerId:
+    name: "dataControllerId"
+    in: "query"
+    description: "Name of the data controller to be get"
+    required: true
+    type: "integer"
+    format: "int32"
+
+  purposeCategory:
+    name: "purposeCategory"
+    in: "body"
+    description: "purpose category details"
+    required: true
+    schema:
+      $ref: '#/definitions/PurposeCategory'
+
+  purposeCategoryId:
+    name: "purposeCategoryId"
+    in: "query"
+    description: "Purpose category id"
+    required: true
+    type: "integer"
+    format: "int32"
+
+  thirdParty:
+    name: "thirdParty"
+    in: "body"
+    description: "third party details"
+    required: true
+    schema:
+      $ref: '#/definitions/ThirdParty'
