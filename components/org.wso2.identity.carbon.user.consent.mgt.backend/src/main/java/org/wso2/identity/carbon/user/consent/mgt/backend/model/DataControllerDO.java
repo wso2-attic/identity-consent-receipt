@@ -37,7 +37,8 @@ public class DataControllerDO {
 
     }
 
-    public DataControllerDO(int dataControllerId, String organizationName, String contactName, String street, String country, String email, String phoneNo, String publicKey, String policyUrl) {
+    public DataControllerDO(int dataControllerId, String organizationName, String contactName, String street,
+                            String country, String email, String phoneNo, String publicKey, String policyUrl) {
 
         this.dataControllerId = dataControllerId;
         this.orgName = organizationName;

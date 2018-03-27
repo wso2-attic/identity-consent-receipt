@@ -19,7 +19,6 @@
 package org.wso2.identity.carbon.user.consent.mgt.backend.dao;
 
 import org.wso2.identity.carbon.user.consent.mgt.backend.exception.DataAccessException;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PurposeCategoryDO;
 import org.wso2.identity.carbon.user.consent.mgt.backend.model.PurposeDetailsDO;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public interface PurposeDetailsDao {
 
     public int getPurposeIdByPurpose(String purposeName) throws DataAccessException;
 
-    public List<PurposeDetailsDO> getPurposeCategories(String SGUID) throws DataAccessException;
+    public List<PurposeDetailsDO> getPurposeCategories(String sguid) throws DataAccessException;
 
     public PurposeDetailsDO addPurposeDetails(PurposeDetailsDO purpose) throws DataAccessException;
 

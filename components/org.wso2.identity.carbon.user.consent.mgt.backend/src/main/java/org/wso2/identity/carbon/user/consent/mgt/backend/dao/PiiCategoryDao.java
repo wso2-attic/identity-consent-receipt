@@ -28,7 +28,7 @@ import java.util.List;
  */
 public interface PiiCategoryDao {
 
-    public List<PiiCategoryDO> getSensitivePersonalInfoCategory(String SGUID) throws DataAccessException;
+    public List<PiiCategoryDO> getSensitivePersonalInfoCategory(String sguid) throws DataAccessException;
 
     public PiiCategoryDO addPiiCategory(PiiCategoryDO piiCategory) throws DataAccessException;
 

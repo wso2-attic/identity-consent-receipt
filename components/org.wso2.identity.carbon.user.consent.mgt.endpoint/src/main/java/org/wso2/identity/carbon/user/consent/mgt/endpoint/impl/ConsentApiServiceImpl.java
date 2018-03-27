@@ -577,6 +577,7 @@ public class ConsentApiServiceImpl extends ConsentApiService {
     public Response consentConfigurationThirdPartyIdGet(Integer categoryId) {
 
         ThirdPartyDTO thirdPartyDTO = new ThirdPartyDTO();
+        thirdPartyDTO.setThirdPartyId(1);
         try {
             ThirdPartyDO thirdPartyDO = getConsentService().getThirdPartyById(categoryId);
             thirdPartyDTO.setThirdPartyId(thirdPartyDO.getThirdPartyId());
@@ -590,8 +591,9 @@ public class ConsentApiServiceImpl extends ConsentApiService {
     private ErrorDTO handleException(DataAccessException e) {
 
         ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setError(e.getErrorCode());
+        errorDTO.setErrorCode(e.getErrorCode());
         errorDTO.setErrorDescription(e.getMessage());
+        errorDTO.setErrorCause(e.getCause().getMessage());
         return errorDTO;
     }
 }

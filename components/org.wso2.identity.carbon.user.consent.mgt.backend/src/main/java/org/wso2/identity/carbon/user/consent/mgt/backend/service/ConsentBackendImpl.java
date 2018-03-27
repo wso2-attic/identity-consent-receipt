@@ -21,14 +21,8 @@ package org.wso2.identity.carbon.user.consent.mgt.backend.service;
 import org.json.simple.JSONObject;
 import org.wso2.identity.carbon.user.consent.mgt.backend.dao.impl.ConsentDaoImpl;
 import org.wso2.identity.carbon.user.consent.mgt.backend.exception.DataAccessException;
-import org.wso2.identity.carbon.user.consent.mgt.backend.jsonParser.JSONParser;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.ConsentDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.DataControllerDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PiiCategoryDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PurposeCategoryDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PurposeDetailsDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.ServicesDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.ThirdPartyDO;
+import org.wso2.identity.carbon.user.consent.mgt.backend.jsonparser.JsonParser;
+import org.wso2.identity.carbon.user.consent.mgt.backend.model.*;
 
 import java.util.List;
 
@@ -42,14 +36,14 @@ public class ConsentBackendImpl implements ConsentBackend {
     @Override
     public JSONObject getCreatedConsentReceipt(String subjectName) throws DataAccessException {
 
-        JSONParser jsonParser = new JSONParser();
+        JsonParser jsonParser = new JsonParser();
         return jsonParser.createConsentReceipt(subjectName);
     }
 
     @Override
     public void readConsentReceipt(String consentString) throws DataAccessException {
 
-        JSONParser jsonParser = new JSONParser();
+        JsonParser jsonParser = new JsonParser();
         jsonParser.readConsentFile(consentString);
     }
 
@@ -66,13 +60,15 @@ public class ConsentBackendImpl implements ConsentBackend {
     }
 
     @Override
-    public PurposeDetailsDO getPurposeByUserByServiceByPurposeId(String subjectName, int serviceId, int purposeId) throws DataAccessException {
+    public PurposeDetailsDO getPurposeByUserByServiceByPurposeId(String subjectName, int serviceId, int purposeId)
+            throws DataAccessException {
 
         return consentDaoImpl.getPurposeByUserByService(subjectName, serviceId, purposeId);
     }
 
     @Override
-    public List<ServicesDO> getServicesByUserByThirdParty(String subjectName, int thirdPartyId) throws DataAccessException {
+    public List<ServicesDO> getServicesByUserByThirdParty(String subjectName, int thirdPartyId)
+            throws DataAccessException {
 
         return consentDaoImpl.getServiceDetailsByThirdParty(subjectName, thirdPartyId);
     }

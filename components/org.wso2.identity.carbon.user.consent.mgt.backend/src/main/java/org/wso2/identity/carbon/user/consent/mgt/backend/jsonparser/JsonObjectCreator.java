@@ -16,25 +16,25 @@
  * under the License.
  */
 
-package org.wso2.identity.carbon.user.consent.mgt.backend.jsonParser;
+package org.wso2.identity.carbon.user.consent.mgt.backend.jsonparser;
 
 /**
  * Class that contains the fields to keep the consent receipt JSON fileds.
  */
-public class JSONObjectCreator {
+public class JsonObjectCreator {
 
     private String subject;
     private String collectionMethod;
     private String jurisdiction;
     private String version;
     private String consentTimestamp;
-    private JSONDataController dataController;
+    private JsonDataController dataController;
     private String publicKey;
     private String policyUrl;
-    private JSONService[] services;
+    private JsonService[] services;
 
-    public JSONObjectCreator(String subject, String collectionMethod, String jurisdiction, String version, String
-            consentTimestamp, JSONService[] services) {
+    public JsonObjectCreator(String subject, String collectionMethod, String jurisdiction, String version, String
+            consentTimestamp, JsonService[] services) {
 
         this.subject = subject;
         this.collectionMethod = collectionMethod;
@@ -44,7 +44,7 @@ public class JSONObjectCreator {
         this.services = services;
     }
 
-    public JSONObjectCreator() {
+    public JsonObjectCreator() {
 
     }
 
@@ -98,22 +98,22 @@ public class JSONObjectCreator {
         this.consentTimestamp = consentTimestamp;
     }
 
-    public JSONService[] getServices() {
+    public JsonService[] getServices() {
 
         return services;
     }
 
-    public void setServices(JSONService[] services) {
+    public void setServices(JsonService[] services) {
 
         this.services = services;
     }
 
-    public JSONDataController getDataController() {
+    public JsonDataController getDataController() {
 
         return dataController;
     }
 
-    public void setDataController(JSONDataController dataControllerId) {
+    public void setDataController(JsonDataController dataControllerId) {
 
         this.dataController = dataController;
     }

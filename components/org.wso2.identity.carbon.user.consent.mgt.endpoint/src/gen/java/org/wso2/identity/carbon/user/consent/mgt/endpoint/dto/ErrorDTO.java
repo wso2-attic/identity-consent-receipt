@@ -7,22 +7,24 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "")
 public class ErrorDTO {
 
-    private String error = null;
+    private String errorCode = null;
 
     private String errorDescription = null;
+
+    private String errorCause = null;
 
     /**
      **/
     @ApiModelProperty(value = "")
     @JsonProperty("error")
-    public String getError() {
+    public String getErrorCode() {
 
-        return error;
+        return errorCode;
     }
 
-    public void setError(String error) {
+    public void setErrorCode(String errorCode) {
 
-        this.error = error;
+        this.errorCode = errorCode;
     }
 
     /**
@@ -39,14 +41,27 @@ public class ErrorDTO {
         this.errorDescription = errorDescription;
     }
 
+    /**
+     **/
+    @ApiModelProperty(value = "")
+    @JsonProperty("errorCause")
+    public String getErrorCause() {
+        return errorCause;
+    }
+
+    public void setErrorCause(String errorCause){
+        this.errorCause=errorCause;
+    }
+
     @Override
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
         sb.append("class ErrorDTO {\n");
 
-        sb.append("  error: ").append(error).append("\n");
+        sb.append("  errorCode: ").append(errorCode).append("\n");
         sb.append("  errorDescription: ").append(errorDescription).append("\n");
+        sb.append("  errorCause: ").append(errorCause).append("\n");
         sb.append("}\n");
         return sb.toString();
     }

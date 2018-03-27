@@ -24,7 +24,11 @@ import org.osgi.service.component.annotations.Component;
 import org.wso2.identity.carbon.user.consent.mgt.backend.service.ConsentBackend;
 import org.wso2.identity.carbon.user.consent.mgt.backend.service.ConsentBackendImpl;
 
-@Component(name = "org.wso2.identity.carbon.user.consent.mgt.backend.internal.ConsentBackendComponent", immediate = true)
+/**
+ * Class that register this component as an OSGi bundle.
+ */
+@Component(name = "org.wso2.identity.carbon.user.consent.mgt.backend.internal.ConsentBackendComponent", immediate =
+        true)
 public class ConsentBackendComponent {
 
     @Activate

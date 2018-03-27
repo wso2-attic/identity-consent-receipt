@@ -73,7 +73,8 @@ public class DBUtils {
             try {
                 connection.close();
             } catch (SQLException e) {
-                log.error("Database error. Could not close the db connection. Continue with others. - " + e.getMessage(), e);
+                log.error("Database error. Could not close the db connection. Continue with others. - " + e
+                        .getMessage(), e);
             }
         }
     }
@@ -84,7 +85,8 @@ public class DBUtils {
             try {
                 preparedStatement.close();
             } catch (SQLException e) {
-                log.error("Database error. Could not close the prepared statement. Continue with others. - " + e.getMessage()
+                log.error("Database error. Could not close the prepared statement. Continue with others. - " + e
+                                .getMessage()
                         , e);
             }
         }
@@ -96,7 +98,8 @@ public class DBUtils {
             try {
                 resultSet.close();
             } catch (SQLException e) {
-                log.error("Database error. Could not close the result set. Continue with others. - " + e.getMessage(), e);
+                log.error("Database error. Could not close the result set. Continue with others. - " + e.getMessage()
+                        , e);
             }
         }
     }

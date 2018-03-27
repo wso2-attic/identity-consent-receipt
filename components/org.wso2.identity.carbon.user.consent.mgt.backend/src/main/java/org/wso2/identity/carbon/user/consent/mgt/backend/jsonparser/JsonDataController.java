@@ -16,19 +16,19 @@
  * under the License.
  */
 
-package org.wso2.identity.carbon.user.consent.mgt.backend.jsonParser;
+package org.wso2.identity.carbon.user.consent.mgt.backend.jsonparser;
 
 /**
  * Class that contains the fields to keep the JSON fields of the data controller.
  */
-public class JSONDataController {
+public class JsonDataController {
 
     private String organizationName;
     private String phone;
     private String contact;
     private String email;
     private String policyUrl;
-    private JSONAddress address;
+    private JsonAddress address;
 
     public String getOrg() {
 
@@ -80,12 +80,12 @@ public class JSONDataController {
         this.policyUrl = policyUrl;
     }
 
-    public JSONAddress getAddress() {
+    public JsonAddress getAddress() {
 
         return address;
     }
 
-    public void setAddress(JSONAddress address) {
+    public void setAddress(JsonAddress address) {
 
         this.address = address;
     }

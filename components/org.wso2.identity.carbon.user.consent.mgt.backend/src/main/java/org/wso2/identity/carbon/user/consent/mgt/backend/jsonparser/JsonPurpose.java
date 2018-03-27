@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.wso2.identity.carbon.user.consent.mgt.backend.jsonParser;
+package org.wso2.identity.carbon.user.consent.mgt.backend.jsonparser;
 
 /**
  * Class that contains the fields to keep the JSON fields of the purposes.
  */
-public class JSONPurpose {
+public class JsonPurpose {
 
     private String purpose;
 

@@ -169,7 +169,7 @@ paths:
           schema:
             $ref: '#/definitions/DataControllerInput'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -188,7 +188,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -205,7 +205,7 @@ paths:
           schema:
             $ref: '#/definitions/DataControllerInput'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -224,7 +224,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -246,7 +246,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -262,7 +262,7 @@ paths:
           schema:
             $ref: '#/definitions/PurposeCategory'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -279,7 +279,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -296,7 +296,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal error"
+          description: "Internal errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -315,7 +315,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -335,7 +335,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -353,7 +353,7 @@ paths:
           schema:
             $ref: '#/definitions/PiiCategory'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -387,7 +387,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -406,7 +406,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -426,7 +426,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -444,7 +444,7 @@ paths:
          schema:
            $ref: '#/definitions/ServiceWebForm'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -463,7 +463,7 @@ paths:
            schema:
              $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -482,7 +482,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -501,7 +501,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -521,7 +521,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -539,7 +539,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -558,7 +558,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -596,7 +596,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -616,7 +616,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -632,7 +632,7 @@ paths:
           schema:
             $ref: '#/definitions/ThirdParty'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -651,7 +651,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -664,7 +664,7 @@ paths:
         200:
           description: "Successfully updated the third party to the consent database"
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -683,7 +683,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -703,7 +703,7 @@ paths:
           schema:
             $ref: '#/definitions/Error'
         500:
-          description: "Internal server error"
+          description: "Internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -719,7 +719,7 @@ paths:
         200:
           description: "successful operation"
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -757,7 +757,7 @@ paths:
         201:
           description: "successfully created the consent"
         500:
-          description: "internal server error"
+          description: "internal server errorCode"
           schema:
             $ref: '#/definitions/Error'
 
@@ -1226,7 +1226,7 @@ definitions:
   Error:
     type: "object"
     properties:
-      error:
+      errorCode:
         type: "string"
       errorDescription:
         type: "string"

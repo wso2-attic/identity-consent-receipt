@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.identity.carbon.user.consent.mgt.backend.jsonParser;
+package org.wso2.identity.carbon.user.consent.mgt.backend.jsonparser;
 
 import com.google.gson.Gson;
 import org.json.simple.JSONArray;
@@ -24,11 +24,7 @@ import org.json.simple.JSONObject;
 import org.wso2.identity.carbon.user.consent.mgt.backend.constants.ConsentReceiptConstants;
 import org.wso2.identity.carbon.user.consent.mgt.backend.dao.impl.ConsentDaoImpl;
 import org.wso2.identity.carbon.user.consent.mgt.backend.exception.DataAccessException;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.ConsentDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.DataControllerDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PiiCategoryDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PurposeDetailsDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.ServicesDO;
+import org.wso2.identity.carbon.user.consent.mgt.backend.model.*;
 import org.wso2.identity.carbon.user.consent.mgt.backend.utils.DateTimeUtil;
 import org.wso2.identity.carbon.user.consent.mgt.backend.utils.UniqueIdUtil;
 
@@ -37,7 +33,7 @@ import java.util.List;
 /**
  * Class that read or create the consent receipt string.
  */
-public class JSONParser {
+public class JsonParser {
 
     /**
      * Creates the consent receipt for the user.
@@ -58,7 +54,8 @@ public class JSONParser {
         consentDaoImpl = new ConsentDaoImpl(consentDO.getSGUID(), true);
         List<ServicesDO> servicesList = consentDaoImpl.getServices();
         if (servicesList.size() != 0) {
-            List<PurposeDetailsDO> purposeCategoryDetailsList = consentDaoImpl.getPurposeCategories(consentDO.getSGUID());
+            List<PurposeDetailsDO> purposeCategoryDetailsList = consentDaoImpl.getPurposeCategories(consentDO
+                    .getSGUID());
             String temp = "";
             JSONArray jsonServiceArr = new JSONArray();
             JSONObject[] jsonServiceObj = new JSONObject[servicesList.size()];
@@ -123,7 +120,8 @@ public class JSONParser {
                                         jsonPurposeObj[j] = new JSONObject();
                                         tempPurpose = purpose.getPurpose();
 
-                                        jsonPurposeObj[j] = setPurposeDetails(j, servicesList, temp, tempPurpose, purpose,
+                                        jsonPurposeObj[j] = setPurposeDetails(j, servicesList, temp, tempPurpose,
+                                                purpose,
                                                 purposeCategoryDetailsList, jsonPurposeObj[j]);
                                     }
                                 }
@@ -247,11 +245,11 @@ public class JSONParser {
 
         Gson gson = new Gson();
 
-        JSONObjectCreator objectCreator = gson.fromJson(consentString, JSONObjectCreator.class);
+        JsonObjectCreator objectCreator = gson.fromJson(consentString, JsonObjectCreator.class);
         readConsentReceipt(objectCreator);
     }
 
-    private void readConsentReceipt(JSONObjectCreator objectCreator) throws DataAccessException {
+    private void readConsentReceipt(JsonObjectCreator objectCreator) throws DataAccessException {
 
         ConsentDaoImpl consentDaoImpl = new ConsentDaoImpl();
 
@@ -292,7 +290,7 @@ public class JSONParser {
             try {
                 serviceId = consentDaoImpl.getServiceIdByService(objectCreator.getServices()[i].getServiceName());
             } catch (DataAccessException e) {
-                e.printStackTrace();
+                throw new DataAccessException("Database error. Could not get the serviceId.", e);
             }
             PurposeDetailsDO[] purposeDO = new PurposeDetailsDO[objectCreator.getServices()[i].getPurposes()
                     .length];
@@ -305,7 +303,7 @@ public class JSONParser {
                         purposeId = consentDaoImpl.getPurposeIdByPurpose(objectCreator.getServices()[i].getPurposes()[j]
                                 .getPurpose());
                     } catch (DataAccessException e) {
-                        e.printStackTrace();
+                        throw new DataAccessException("Database error. Could not get the purposeId.", e);
                     }
                     if (purposeId != 0) {
                         purposeDO[j].setPurposeId(purposeId);

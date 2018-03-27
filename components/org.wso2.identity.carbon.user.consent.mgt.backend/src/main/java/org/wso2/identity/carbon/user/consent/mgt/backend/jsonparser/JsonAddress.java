@@ -16,12 +16,12 @@
  * under the License.
  */
 
-package org.wso2.identity.carbon.user.consent.mgt.backend.jsonParser;
+package org.wso2.identity.carbon.user.consent.mgt.backend.jsonparser;
 
 /**
  * Class that contains the fields to keep the JSON address fields.
  */
-public class JSONAddress {
+public class JsonAddress {
 
     private String addressCountry;
     private String streetAddress;

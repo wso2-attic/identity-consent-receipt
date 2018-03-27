@@ -20,13 +20,7 @@ package org.wso2.identity.carbon.user.consent.mgt.backend.service;
 
 import org.json.simple.JSONObject;
 import org.wso2.identity.carbon.user.consent.mgt.backend.exception.DataAccessException;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.ConsentDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.DataControllerDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PiiCategoryDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PurposeCategoryDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.PurposeDetailsDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.ServicesDO;
-import org.wso2.identity.carbon.user.consent.mgt.backend.model.ThirdPartyDO;
+import org.wso2.identity.carbon.user.consent.mgt.backend.model.*;
 
 import java.util.List;
 

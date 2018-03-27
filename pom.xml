@@ -325,7 +325,7 @@
         <apache.cxf.jaxrs.version>3.1.7</apache.cxf.jaxrs.version>
         <apache.cxf.service.description>3.1.7</apache.cxf.service.description>
         <codehaus.jackson.version>1.8.6</codehaus.jackson.version>
-        <apache.maven.scr.plugin.version>1.9.0</apache.maven.scr.plugin.version>
+        <apache.maven.scr.plugin.version>1.22.0</apache.maven.scr.plugin.version>
         <apache.maven.war.plugin.version>2.2</apache.maven.war.plugin.version>
         <testng.version>6.3.1</testng.version>
         <jacoco.version>0.7.9</jacoco.version>

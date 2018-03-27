@@ -16,15 +16,15 @@
  * under the License.
  */
 
-package org.wso2.identity.carbon.user.consent.mgt.backend.jsonParser;
+package org.wso2.identity.carbon.user.consent.mgt.backend.jsonparser;
 
 /**
  * Class that contains the fields to keep the JSON fields of the services.
  */
-public class JSONService {
+public class JsonService {
 
     private String serviceName;
-    private JSONPurpose[] purposes;
+    private JsonPurpose[] purposes;
 
     public String getServiceName() {
 
@@ -36,12 +36,12 @@ public class JSONService {
         this.serviceName = serviceName;
     }
 
-    public JSONPurpose[] getPurposes() {
+    public JsonPurpose[] getPurposes() {
 
         return purposes;
     }
 
-    public void setPurposes(JSONPurpose[] purposes) {
+    public void setPurposes(JsonPurpose[] purposes) {
 
         this.purposes = purposes;
     }

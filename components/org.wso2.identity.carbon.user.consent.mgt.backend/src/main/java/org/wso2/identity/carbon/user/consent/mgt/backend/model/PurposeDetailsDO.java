@@ -165,7 +165,7 @@ public class PurposeDetailsDO {
         return thirdPartyName;
     }
 
-    public void setthirdPartyName(String thirdPartyName) {
+    public void setThirdPartyName(String thirdPartyName) {
 
         this.thirdPartyName = thirdPartyName;
     }

@@ -26,7 +26,7 @@ public class ConsentDO {
     private String version;
     private String jurisdiction;
     private String collectionMethod;
-    private String SGUID;
+    private String sguid;
     private String piiPrincipalId;
     private String consentTimestamp;
     private DataControllerDO dataController;
@@ -35,10 +35,11 @@ public class ConsentDO {
 
     }
 
-    public ConsentDO(String collectionMethod, String SGUID, String piiPrincipalId, String consentTimestamp, DataControllerDO dataController) {
+    public ConsentDO(String collectionMethod, String sguid, String piiPrincipalId, String consentTimestamp,
+                     DataControllerDO dataController) {
 
         this.collectionMethod = collectionMethod;
-        this.SGUID = SGUID;
+        this.sguid = sguid;
         this.piiPrincipalId = piiPrincipalId;
         this.consentTimestamp = consentTimestamp;
         this.dataController = dataController;
@@ -86,12 +87,12 @@ public class ConsentDO {
 
     public String getSGUID() {
 
-        return SGUID;
+        return sguid;
     }
 
-    public void setSGUID(String SGUID) {
+    public void setSGUID(String sguid) {
 
-        this.SGUID = SGUID;
+        this.sguid = sguid;
     }
 
     public String getPiiPrincipalId() {
